@@ -1,6 +1,7 @@
-import { google } from "googleapis";
-import { gql, ApolloServer } from "apollo-server-micro";
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+const { google } = require("googleapis");
+const { gql, ApolloServer } = require("apollo-server-micro");
+const { ApolloServerPluginLandingPageGraphQLPlayground } = require("apollo-server-core");
+const cors = require("micro-cors")(); // highlight-line
 
 const getColumns = async (spreadsheetId, range) => {
   const auth = await google.auth.getClient({
@@ -46,16 +47,12 @@ const apolloServer = new ApolloServer({
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
 });
 
-const startServer = apolloServer.start();
+module.exports = apolloServer.start().then(() => {
+  const handler = apolloServer.createHandler({ path: "/api" });
+  return cors((req, res) => (req.method === "OPTIONS" ? send(res, 200, "ok") : handler(req, res)));
+});
 
-export default async function handler(req, res) {
-  await startServer;
-  await apolloServer.createHandler({
-    path: "/api",
-  })(req, res);
-}
-
-export const config = {
+module.exports.config = {
   api: {
     bodyParser: false,
   },
