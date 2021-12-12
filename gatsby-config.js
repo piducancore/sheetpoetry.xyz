@@ -1,11 +1,12 @@
 module.exports = {
   siteMetadata: {
-    title: "sheetforms.co",
-    siteUrl: "https://sheetforms.co",
-    description: "An open API to save your forms data to a Google Spreadsheet.",
-    repo: "https://github.com/piducancore/sheetforms.co",
+    title: "sheetpoetry.xyz",
+    siteUrl: "https://sheetpoetry.xyz",
+    description: "This is a GraphQL API to generate poems from randomly selected cells on a Google spreadsheet",
+    repo: "https://github.com/piducancore/sheetpoetry.xyz",
   },
   plugins: [
+    "gatsby-plugin-catch-links",
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
