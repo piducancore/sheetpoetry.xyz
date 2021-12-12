@@ -8,7 +8,7 @@ import AnimatedText from "./animated-text";
 import Form from "./form";
 
 const client = new ApolloClient({
-  uri: "https://sheetpoetry.now.sh/graphql",
+  uri: "/api",
   cache: new InMemoryCache(),
   fetch,
 });
