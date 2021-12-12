@@ -1,6 +1,6 @@
 import { system } from "@theme-ui/presets";
 import { merge } from "theme-ui";
-import prismPreset from "@theme-ui/prism/presets/prism-coy.json";
+import prismPreset from "@theme-ui/prism/presets/night-owl.json";
 
 import "@fontsource/space-grotesk/300.css";
 import "@fontsource/space-grotesk/500.css";
@@ -13,8 +13,13 @@ const theme = merge(system, {
     heading: 700,
     bold: 700,
   },
-  colors: { secondary: "#2f9c0a" },
-  sizes: { container: 480 },
+  colors: {
+    text: "#1E212B",
+    primary: "#D90368",
+    secondary: "#FFD400",
+    background: "#FFFFFF",
+  },
+  sizes: { container: 960 },
   layout: {
     container: {
       maxWidth: "container",
@@ -56,6 +61,9 @@ const theme = merge(system, {
     },
     inlineCode: {
       color: "primary",
+    },
+    img: {
+      maxWidth: "100%",
     },
   },
 });
