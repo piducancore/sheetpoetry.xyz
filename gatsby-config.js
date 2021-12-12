@@ -16,5 +16,17 @@ module.exports = {
       },
     },
     "gatsby-plugin-theme-ui",
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `sheetpoetry.xyz`,
+        short_name: `sheetpoetry`,
+        start_url: `/`,
+        background_color: `#FFFFFF`,
+        theme_color: `#D90368`,
+        display: `minimal-ui`,
+        icon: `static/images/icon.svg`, // This path is relative to the root of the site.
+      },
+    },
   ],
 };
