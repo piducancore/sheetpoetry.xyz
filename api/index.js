@@ -45,6 +45,7 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+  introspection: true,
 });
 
 module.exports = apolloServer.start().then(() => {
