@@ -1,0 +1,49 @@
+---
+name: "sheetpoetry"
+description: "A GraphQL API to generate poems from randomly selected cells on a Google spreadsheet."
+tags: ["apollo", "graphql", "serverless", "vercel"]
+---
+
+import Example from "../components/example";
+
+# sheetpoetry
+
+_(Puedes leer esto en [español aquí](/))_
+
+## What is this?
+
+This is a GraphQL API to generate poems from randomly selected cells on a Google spreadsheet.
+
+## How to use
+
+The API takes a query called `sheetpoem` with 3 arguments:
+
+- `spreadsheetId` (String): The spreadsheet's ID.
+- `range` (String): The range of cells.
+- `verses` (Int): The number of verses.
+
+The `spreadsheetId` is your spreadsheet's unique identificator. Is the part of the URL selected in the image below and it looks similar to this: _1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU_.
+
+[![spreadsheet Id](../images/id.gif)](../images/id.gif)
+
+`range` is a selection of rows and cells. For a selection like the one shown below it would be: _A1:D18_.
+
+[![range](../images/range.gif)](../images/range.gif)
+
+And `verses` is a number, like _1_, _6_ or _3021_, representing how many verses you want your poem to have.
+
+That being said, an example query would look something similar to this:
+
+```graphql
+query {
+  sheetpoem(spreadsheetId: "1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU", range: "A1:B50", verses: 4)
+}
+```
+
+You can try this query live at the [GraphQL Playground](https://sheetpoetry.xyz/api).
+
+## Example
+
+For this example we are using [this spreadsheet](https://docs.google.com/spreadsheets/d/1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU/edit?usp=sharing) with "1000 chilean verses" selected by Felipe Cussen and Marcela Labraña.
+
+<Example />

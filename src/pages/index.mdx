@@ -1,45 +1,49 @@
-# sheetforms.co
+---
+name: "sheetpoetry"
+description: "A GraphQL API to generate poems from randomly selected cells on a Google spreadsheet."
+tags: ["apollo", "graphql", "serverless", "vercel"]
+---
 
-An open API to save your forms data to a [Google Spreadsheet](https://docs.google.com/spreadsheets).
+import Example from "../components/example";
 
-## How to use?
+# sheetpoetry
 
-Make a `POST` request to `https://sheetforms.co/api` like this:
+_(You can read this in [english here](/en))_
 
-```js
-async function handleSubmit() {
-  await fetch("https://sheetforms.co/api", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      spreadsheetId: "YOUR_SPREADSHEET_ID",
-      values: ["ADD", "SOME", "DATA", "HERE"],
-    }),
-  });
+## ¿Qué es esto?
+
+Esta es una API GraphQL para generar poemas desde celdas seleccionadas al azar en una hoja de cálculo de Google.
+
+## ¿Cómo funciona?
+
+La API acepta una consulta llamada `sheetpoem` con 3 argumentos:
+
+- `spreadsheetId` (String): El ID de la hoja de cálculo.
+- `range` (String): El rango de celdas y columnas.
+- `verses` (Int): La cantidad de versos.
+
+El `spreadsheetId` es el identificador único de tu hoja de cálculo. Es la parte de la URL que se muestra seleccionada en la imagen siguiente, y luce similar a esto: _1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU_.
+
+[![spreadsheet Id](../images/id.gif)](../images/id.gif)
+
+`range` es una selección de filas y columnas. Para una selección como la mostrada a continuación, este sería: _A1:D18_.
+
+[![range](../images/range.gif)](../images/range.gif)
+
+Y `verses` es un número, como _1_, _6_ o _3021_, y representa cuántos versos quieres que tenga tu poema.
+
+Habiendo dicho esto, una consulta de ejemplo luciría algo así:
+
+```graphql
+query {
+  sheetpoem(spreadsheetId: "1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU", range: "A1:B50", verses: 4)
 }
 ```
 
-And remember to set [sheetforms.co](https://sheetforms.co) as `Editor` in your spreadsheet sharing options.
+Puedes probar esta consulta en vivo en el [GraphQL Playground](https://sheetpoetry.xyz/api).
 
-```sh
-# sheetforms.co client email
-sheetforms@sheetforms.iam.gserviceaccount.com
-```
+## Ejemplo
 
-🥳 That's it.
+Para este ejemplo usamos [esta hoja de cálculo](https://docs.google.com/spreadsheets/d/1qjgDw3TREpqQoSSbB0tzd0Joues1jraJix2mU52zToU/edit?usp=sharing) con "1000 versos chilenos" seleccionados por Felipe Cussen y Marcela Labraña.
 
-## Example
-
-Submit the following form and check [this spreadsheet](https://docs.google.com/spreadsheets/d/10-gjdQO_EVvd_QpANHdDBCkJTYQy8ykxTLGk9IJPESQ/edit?usp=sharing).
-
-<Form />
-
-## API
-
-The API takes a `POST` request with the following `body`:
-
-- `spreadsheetId`: The ID of the spreadsheet to save the data to.
-- `values`: An array of values to save to the spreadsheet.
-- `range`: (_optional_) The range to save the data to.
-
-import Form from "../components/form";
+<Example />
