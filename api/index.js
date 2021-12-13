@@ -4,18 +4,22 @@ const { ApolloServerPluginLandingPageGraphQLPlayground } = require("apollo-serve
 const cors = require("micro-cors")(); // highlight-line
 
 const getColumns = async (spreadsheetId, range) => {
-  const auth = await google.auth.getClient({
-    credentials: {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n").trim(),
-    },
-    scopes: "https://www.googleapis.com/auth/spreadsheets.readonly",
-  });
-  const { spreadsheets } = google.sheets({ version: "v4", auth });
-  const { data } = await spreadsheets.values.get({ spreadsheetId, range });
-  const { values } = data;
-  const columns = values[0].map((_, colIndex) => values.map((row) => row[colIndex]));
-  return columns;
+  try {
+    const auth = await google.auth.getClient({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n").trim(),
+      },
+      scopes: "https://www.googleapis.com/auth/spreadsheets.readonly",
+    });
+    const { spreadsheets } = google.sheets({ version: "v4", auth });
+    const { data } = await spreadsheets.values.get({ spreadsheetId, range });
+    const { values } = data;
+    const columns = values[0].map((_, colIndex) => values.map((row) => row[colIndex]));
+    return columns;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const sheetPoetry = async (spreadsheetId, range, repeat) => {
@@ -45,7 +49,7 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-  // introspection: true,
+  introspection: true,
 });
 
 module.exports = apolloServer.start().then(() => {
