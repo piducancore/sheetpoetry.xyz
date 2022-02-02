@@ -52,9 +52,7 @@ const apolloServer = new ApolloServer({
   introspection: true,
 });
 
-const handler = apolloServer.start().then(() => {
-  return apolloServer.createHandler({ path: "/api" });
-});
+const handler = apolloServer.createHandler({ path: "/api" });
 
 module.exports = allowCors(handler);
 
