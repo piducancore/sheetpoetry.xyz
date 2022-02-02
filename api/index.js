@@ -1,8 +1,7 @@
 const { google } = require("googleapis");
 const { gql, ApolloServer } = require("apollo-server-micro");
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require("apollo-server-core");
-const cors = require("micro-cors")(); // highlight-line
-const { send } = require("micro");
+const { allowCors } = require("../utils/cors");
 
 const getColumns = async (spreadsheetId, range) => {
   try {
@@ -53,10 +52,11 @@ const apolloServer = new ApolloServer({
   introspection: true,
 });
 
-module.exports = apolloServer.start().then(() => {
-  const handler = apolloServer.createHandler({ path: "/api" });
-  return cors((req, res) => (req.method === "OPTIONS" ? send(res, 200, "ok") : handler(req, res)));
+const handler = apolloServer.start().then(() => {
+  return apolloServer.createHandler({ path: "/api" });
 });
+
+module.exports = allowCors(handler);
 
 module.exports.config = {
   api: {
