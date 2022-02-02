@@ -52,9 +52,10 @@ const apolloServer = new ApolloServer({
   introspection: true,
 });
 
-const handler = async () => (await apolloServer.start()) && apolloServer.createHandler({ path: "/api" });
-
-module.exports = allowCors(handler);
+module.exports = apolloServer.start().then(() => {
+  const handler = apolloServer.createHandler({ path: "/api" });
+  return allowCors((req, res) => (req.method === "OPTIONS" ? send(res, 200, "ok") : handler(req, res)));
+});
 
 module.exports.config = {
   api: {
