@@ -2,6 +2,7 @@ const { google } = require("googleapis");
 const { gql, ApolloServer } = require("apollo-server-micro");
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require("apollo-server-core");
 const cors = require("micro-cors")(); // highlight-line
+const { send } = require("micro");
 
 const getColumns = async (spreadsheetId, range) => {
   try {
